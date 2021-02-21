@@ -17,6 +17,7 @@ package org.springblade.gateway.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import org.springblade.core.launch.constant.TokenConstant;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -28,8 +29,8 @@ import java.util.Base64;
  */
 public class JwtUtil {
 
-	public static String SIGN_KEY = "BladeX";
-	public static String BEARER = "bearer";
+	public static String SIGN_KEY = TokenConstant.SIGN_KEY;
+	public static String BEARER = TokenConstant.BEARER;
 	public static Integer AUTH_LENGTH = 7;
 
 	public static String BASE64_SECURITY = Base64.getEncoder().encodeToString(SIGN_KEY.getBytes(StandardCharsets.UTF_8));
@@ -45,8 +46,8 @@ public class JwtUtil {
 			String headStr = auth.substring(0, 6).toLowerCase();
 			if (headStr.compareTo(BEARER) == 0) {
 				auth = auth.substring(7);
-				return auth;
 			}
+			return auth;
 		}
 		return null;
 	}
@@ -59,8 +60,8 @@ public class JwtUtil {
 	 */
 	public static Claims parseJWT(String jsonWebToken) {
 		try {
-			return Jwts.parser()
-				.setSigningKey(Base64.getDecoder().decode(JwtUtil.BASE64_SECURITY))
+			return Jwts.parserBuilder()
+				.setSigningKey(Base64.getDecoder().decode(JwtUtil.BASE64_SECURITY)).build()
 				.parseClaimsJws(jsonWebToken).getBody();
 		} catch (Exception ex) {
 			return null;

@@ -18,6 +18,8 @@ package org.springblade.system.user.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -40,10 +42,16 @@ public class User extends TenantEntity {
 	/**
 	 * 主键id
 	 */
-	@TableId(value = "id", type = IdType.AUTO)
-	@ApiModelProperty(value = "主键id")
-	private Integer id;
+	@ApiModelProperty(value = "主键")
+	@TableId(value = "id", type = IdType.ASSIGN_ID)
+	@JsonSerialize(using = ToStringSerializer.class)
+	private Long id;
 
+
+	/**
+	 * 编号
+	 */
+	private String code;
 	/**
 	 * 账号
 	 */
@@ -60,6 +68,10 @@ public class User extends TenantEntity {
 	 * 真名
 	 */
 	private String realName;
+	/**
+	 * 头像
+	 */
+	private String avatar;
 	/**
 	 * 邮箱
 	 */
@@ -84,6 +96,10 @@ public class User extends TenantEntity {
 	 * 部门id
 	 */
 	private String deptId;
+	/**
+	 * 部门id
+	 */
+	private String postId;
 
 
 }

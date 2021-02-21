@@ -15,6 +15,7 @@
  */
 package org.springblade.system.controller;
 
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import org.springblade.core.boot.ctrl.BladeController;
@@ -109,7 +110,7 @@ public class DictController extends BladeController {
 	@ApiOperationSupport(order = 5)
 	@ApiOperation(value = "删除", notes = "传入ids")
 	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
-		return R.status(dictService.removeByIds(Func.toIntList(ids)));
+		return R.status(dictService.removeByIds(Func.toLongList(ids)));
 	}
 
 	/**

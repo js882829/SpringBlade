@@ -16,10 +16,13 @@
 package org.springblade.system.user.service;
 
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springblade.core.mp.base.BaseService;
 import org.springblade.system.user.entity.User;
 import org.springblade.system.user.entity.UserInfo;
+import org.springblade.system.user.entity.UserOauth;
+import org.springblade.system.user.excel.UserExcel;
 
 import java.util.List;
 
@@ -32,7 +35,6 @@ public interface IUserService extends BaseService<User> {
 
 	/**
 	 * 新增或修改用户
-	 *
 	 * @param user
 	 * @return
 	 */
@@ -66,6 +68,14 @@ public interface IUserService extends BaseService<User> {
 	UserInfo userInfo(String tenantId, String account, String password);
 
 	/**
+	 * 用户信息
+	 *
+	 * @param userOauth
+	 * @return
+	 */
+	UserInfo userInfo(UserOauth userOauth);
+
+	/**
 	 * 给用户设置角色
 	 *
 	 * @param userIds
@@ -83,6 +93,17 @@ public interface IUserService extends BaseService<User> {
 	boolean resetPassword(String userIds);
 
 	/**
+	 * 修改密码
+	 *
+	 * @param userId
+	 * @param oldPassword
+	 * @param newPassword
+	 * @param newPassword1
+	 * @return
+	 */
+	boolean updatePassword(Long userId, String oldPassword, String newPassword, String newPassword1);
+
+	/**
 	 * 获取角色名
 	 *
 	 * @param roleIds
@@ -97,4 +118,29 @@ public interface IUserService extends BaseService<User> {
 	 * @return
 	 */
 	List<String> getDeptName(String deptIds);
+
+	/**
+	 * 导入用户数据
+	 *
+	 * @param data
+	 * @return
+	 */
+	void importUser(List<UserExcel> data);
+
+	/**
+	 * 获取导出用户数据
+	 *
+	 * @param queryWrapper
+	 * @return
+	 */
+	List<UserExcel> exportUser(Wrapper<User> queryWrapper);
+
+	/**
+	 * 注册用户
+	 *
+	 * @param user
+	 * @param oauthId
+	 * @return
+	 */
+	boolean registerGuest(User user, Long oauthId);
 }

@@ -15,6 +15,7 @@
  */
 package org.springblade.system.controller;
 
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import org.springblade.core.boot.ctrl.BladeController;
@@ -98,7 +99,7 @@ public class MenuController extends BladeController {
 	@ApiOperationSupport(order = 4)
 	@ApiOperation(value = "删除", notes = "传入ids")
 	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
-		return R.status(menuService.removeByIds(Func.toIntList(ids)));
+		return R.status(menuService.removeByIds(Func.toLongList(ids)));
 	}
 
 	/**
@@ -108,7 +109,7 @@ public class MenuController extends BladeController {
 	@ApiOperationSupport(order = 5)
 	@ApiOperation(value = "前端菜单数据", notes = "前端菜单数据")
 	public R<List<MenuVO>> routes(BladeUser user) {
-		List<MenuVO> list = menuService.routes(user.getRoleId());
+		List<MenuVO> list = menuService.routes((user == null || user.getUserId() == 0L) ? null : user.getRoleId());
 		return R.data(list);
 	}
 
@@ -161,6 +162,9 @@ public class MenuController extends BladeController {
 	@ApiOperationSupport(order = 10)
 	@ApiOperation(value = "菜单的角色权限")
 	public R<List<Kv>> authRoutes(BladeUser user) {
+		if (Func.isEmpty(user) || user.getUserId() == 0L) {
+			return null;
+		}
 		return R.data(menuService.authRoutes(user));
 	}
 

@@ -33,6 +33,9 @@ import java.util.Map;
  */
 public class TokenUtil {
 
+	public final static String CAPTCHA_HEADER_KEY = "Captcha-Key";
+	public final static String CAPTCHA_HEADER_CODE = "Captcha-Code";
+	public final static String CAPTCHA_NOT_CORRECT = "验证码不正确";
 	public final static String TENANT_HEADER_KEY = "Tenant-Id";
 	public final static String DEFAULT_TENANT_ID = "000000";
 	public final static String USER_TYPE_HEADER_KEY = "User-Type";
@@ -55,6 +58,7 @@ public class TokenUtil {
 		Map<String, String> param = new HashMap<>(16);
 		param.put(TokenConstant.TOKEN_TYPE, TokenConstant.ACCESS_TOKEN);
 		param.put(TokenConstant.TENANT_ID, user.getTenantId());
+		param.put(TokenConstant.OAUTH_ID, userInfo.getOauthId());
 		param.put(TokenConstant.USER_ID, Func.toStr(user.getId()));
 		param.put(TokenConstant.ROLE_ID, user.getRoleId());
 		param.put(TokenConstant.ACCOUNT, user.getAccount());
@@ -63,6 +67,9 @@ public class TokenUtil {
 
 		TokenInfo accessToken = SecureUtil.createJWT(param, "audience", "issuser", TokenConstant.ACCESS_TOKEN);
 		AuthInfo authInfo = new AuthInfo();
+		authInfo.setUserId(user.getId());
+		authInfo.setTenantId(user.getTenantId());
+		authInfo.setOauthId(userInfo.getOauthId());
 		authInfo.setAccount(user.getAccount());
 		authInfo.setUserName(user.getRealName());
 		authInfo.setAuthority(Func.join(userInfo.getRoles()));

@@ -5,26 +5,28 @@
 
     <groupId>org.springblade</groupId>
     <artifactId>SpringBlade</artifactId>
-    <version>2.5.1</version>
+    <version>3.0.1</version>
     <packaging>pom</packaging>
 
     <properties>
-        <blade.tool.version>2.5.1</blade.tool.version>
-        <blade.project.version>2.5.1</blade.project.version>
+        <blade.tool.version>3.0.1</blade.tool.version>
+        <blade.project.version>3.0.1</blade.project.version>
 
         <java.version>1.8</java.version>
-        <swagger.version>2.9.2</swagger.version>
-        <swagger.models.version>1.5.21</swagger.models.version>
-        <swagger.bootstrapui.version>1.9.6</swagger.bootstrapui.version>
-        <mybatis.plus.version>3.1.2</mybatis.plus.version>
-        <curator.framework.version>4.0.1</curator.framework.version>
+        <maven.plugin.version>3.8.1</maven.plugin.version>
+        <swagger.version>2.10.5</swagger.version>
+        <swagger.models.version>1.6.2</swagger.models.version>
+        <knife4j.version>2.0.8</knife4j.version>
         <protostuff.version>1.6.0</protostuff.version>
-        <mica.auto.version>1.1.0</mica.auto.version>
-        <alibaba.cloud.version>2.1.0.RELEASE</alibaba.cloud.version>
-        <spring.boot.admin.version>2.1.5</spring.boot.admin.version>
+        <captcha.version>1.6.2</captcha.version>
+        <easyexcel.version>2.2.6</easyexcel.version>
+        <mica.auto.version>1.2.5</mica.auto.version>
+        <alibaba.cloud.version>2.2.5.RC2</alibaba.cloud.version>
+        <spring.boot.admin.version>2.3.1</spring.boot.admin.version>
+        <spring.plugin.version>2.0.0.RELEASE</spring.plugin.version>
 
-        <spring.boot.version>2.1.8.RELEASE</spring.boot.version>
-        <spring.cloud.version>Greenwich.SR3</spring.cloud.version>
+        <spring.boot.version>2.4.2</spring.boot.version>
+        <spring.cloud.version>2020.0.1</spring.cloud.version>
         <spring.platform.version>Cairo-SR8</spring.platform.version>
 
         <!-- 推荐使用Harbor -->
@@ -44,6 +46,16 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.plugin</groupId>
+                <artifactId>spring-plugin-core</artifactId>
+                <version>${spring.plugin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.plugin</groupId>
+                <artifactId>spring-plugin-metadata</artifactId>
+                <version>${spring.plugin.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -115,6 +127,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.plugin.version}</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -130,7 +143,7 @@
     <repositories>
         <repository>
             <id>aliyun-repos</id>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <url>https://maven.aliyun.com/nexus/content/groups/public/</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
@@ -140,7 +153,7 @@
     <pluginRepositories>
         <pluginRepository>
             <id>aliyun-plugin</id>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <url>https://maven.aliyun.com/nexus/content/groups/public/</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>

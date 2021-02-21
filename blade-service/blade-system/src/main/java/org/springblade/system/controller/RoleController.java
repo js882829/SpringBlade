@@ -16,6 +16,7 @@
 package org.springblade.system.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import org.springblade.core.boot.ctrl.BladeController;
@@ -27,6 +28,7 @@ import org.springblade.core.tool.node.INode;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.system.entity.Role;
 import org.springblade.system.service.IRoleService;
+import org.springblade.system.vo.GrantVO;
 import org.springblade.system.vo.RoleVO;
 import org.springblade.system.wrapper.RoleWrapper;
 import org.springframework.web.bind.annotation.*;
@@ -108,22 +110,17 @@ public class RoleController extends BladeController {
 	@ApiOperationSupport(order = 5)
 	@ApiOperation(value = "删除", notes = "传入ids")
 	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
-		return R.status(roleService.removeByIds(Func.toIntList(ids)));
+		return R.status(roleService.removeByIds(Func.toLongList(ids)));
 	}
 
 	/**
 	 * 设置菜单权限
-	 *
-	 * @param roleIds
-	 * @param menuIds
-	 * @return
 	 */
 	@PostMapping("/grant")
 	@ApiOperationSupport(order = 6)
 	@ApiOperation(value = "权限设置", notes = "传入roleId集合以及menuId集合")
-	public R grant(@ApiParam(value = "roleId集合", required = true) @RequestParam String roleIds,
-				   @ApiParam(value = "menuId集合", required = true) @RequestParam String menuIds) {
-		boolean temp = roleService.grant(Func.toIntList(roleIds), Func.toIntList(menuIds));
+	public R grant(@RequestBody GrantVO grantVO) {
+		boolean temp = roleService.grant(grantVO.getRoleIds(), grantVO.getMenuIds());
 		return R.status(temp);
 	}
 
